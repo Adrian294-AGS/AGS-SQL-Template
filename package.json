@@ -1,0 +1,26 @@
+{
+  "name": "sql-query",
+  "version": "1.0.0",
+  "description": "preset query",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adrian294-AGS/AGS-SQL-Template.git"
+  },
+  "keywords": [
+    "SQL"
+  ],
+  "author": "Santiago, Adrian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adrian294-AGS/AGS-SQL-Template/issues"
+  },
+  "homepage": "https://github.com/Adrian294-AGS/AGS-SQL-Template#readme",
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+}
