@@ -1,7 +1,4 @@
-import { rejects } from "assert";
 import { exec } from "child_process";
-import { resolve } from "path";
-import { text } from "stream/consumers";
 
 class AGS {
   #table;
@@ -46,19 +43,9 @@ class AGS {
     } FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ?`;
     return sql;
   }
-
-  async getJokes() {
-    try {
-      exec("curl https://icanhazdadjoke.com", (error, stdout, stderr) => {
-        console.log(stdout);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
 
-export const testingLang = async () => {
+export const getDadJokes = async () => {
   return new Promise((resolve, reject) => {
    try {
     exec("curl https://icanhazdadjoke.com", (error, stdout, stderr) => {
