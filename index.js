@@ -1,14 +1,27 @@
 import { exec } from "child_process";
-
+import { db } from "./database/dbConnection.js";
 class AGS {
   #table;
-  constructor(aTable) {
-    this.#table = aTable;
+  #user;
+  #password;
+  #host;
+  #database;
+  #sqlOperation;
+
+  constructor(aUser, aPassword, aHost, aDatabase) {
+    this.#user = aUser;
+    this.#password = aPassword;
+    this.#host = aHost;
+    this.#database = aDatabase;
+
+    this.#sqlOperation = db(this.#user, this.#password, this.#host, this.#database);
+
   }
 
-  select(columnName) {
-    const sql = `SELECT ${columnName || "*"} FROM ${this.#table}`;
-    return sql;
+  async select(columnName, tableName) {
+    const sql = `SELECT ${columnName || "*"} FROM ${tableName}`;
+    const [result] = await this.#sqlOperation.query(sql);
+    return result;
   }
 
   selectWithId(yourIdName, columnName) {
@@ -23,8 +36,8 @@ class AGS {
     return sql;
   }
 
-  update(yourIdName, tableName) {
-    const sql = `UPDATE ${tableName || this.#table} SET ? WHERE ${
+  update(yourIdName, tableName, columnAndValue) {
+    const sql = `UPDATE ${tableName || this.#table} SET ${columnAndValue} WHERE ${
       yourIdName || "Id"
     } = ?`;
     return sql;

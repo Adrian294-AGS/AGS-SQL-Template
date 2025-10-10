@@ -22,5 +22,8 @@
   "homepage": "https://github.com/Adrian294-AGS/AGS-SQL-Template#readme",
   "dependencies": {
     "child_process": "^1.0.2"
+  },
+  "devDependencies": {
+    "mysql2": "^3.15.2"
   }
 }
