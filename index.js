@@ -53,10 +53,21 @@ class AGS {
   }
 
   async delete(tableName, yourIdName, idValue) {
-    const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue}`;
     try {
-      const [result] = await this.#sqlOperation.query(sql);
-      return result;
+      if(Array.isArray(idValue)){
+        let result = {
+          affectedRows: 0
+        }
+        for(let i in idValue){
+          const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue[i]}`;
+          await this.#sqlOperation.query(sql);
+          result.affectedRows += 1;
+        }
+        return result;
+      }
+      const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue}`;
+      const [deleteResult] = await this.#sqlOperation.query(sql);
+      return deleteResult;
     } catch (error) {
       console.log(error);
     }
@@ -72,6 +83,12 @@ class AGS {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async selectInnerJoin(tbl_a, tbl_b, columnName, onCondition){
+    const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} INNER JOIN ${tbl_b} ON ${onCondition}`;
+    const [result] = await this.#sqlOperation.query(sql);
+    return result;
   }
 }
 
