@@ -2,6 +2,7 @@ import { exec } from "child_process";
 import { db } from "./database/dbConnection.js";
 
 class AGS {
+
   #sqlOperation;
 
   constructor(aUser, aPassword, aHost, aDatabase) {
@@ -9,8 +10,18 @@ class AGS {
   }
 
   async select(columnName, tableName) {
-    const sql = `SELECT ${columnName || "*"} FROM ${tableName}`;
     try {
+      if(Array.isArray(tableName)){
+        let result = [];
+        for(let i in tableName){
+          const sql = `SELECT * FROM ${tableName[i]}`;
+          const [selectResult] = await this.#sqlOperation.query(sql);
+          result.push(selectResult);
+        }
+        return result;
+      }
+
+      const sql = `SELECT ${columnName || "*"} FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
@@ -19,34 +30,65 @@ class AGS {
   }
 
   async selectWithId(yourIdName, columnName, tableName, idValue) {
-    const sql = `SELECT ${columnName || "*"} FROM ${tableName} WHERE ${
+    
+    try {
+      if(Array.isArray(idValue)){
+        let result = [];
+        for(let i in idValue){
+          const sql = `SELECT ${columnName || "*"} FROM ${tableName} WHERE ${
+      yourIdName || "Id"
+    } = ${idValue[i]}`;
+          const [selectResult] = await this.#sqlOperation.query(sql)
+          result.push(selectResult[0]);
+        }
+        return result;
+      }
+
+      const sql = `SELECT ${columnName || "*"} FROM ${tableName} WHERE ${
       yourIdName || "Id"
     } = ${idValue}`;
-    try {
-      const [result] = await this.#sqlOperation.query(sql);
-      return result[0];
+      const [selectResult] = await this.#sqlOperation.query(sql)
+      return selectResult[0];
+
     } catch (error) {
       console.log(error);
     }
   }
 
   async insertInto(tableName, objectValue) {
-    const sql = `INSERT INTO ${tableName} SET ?`;
     try {
-      const [result] = await this.#sqlOperation.query(sql, [objectValue]);
+     if(Array.isArray(objectValue)){
+      let result = [];
+      for(let i in objectValue){
+        const sql = `INSERT INTO ${tableName} SET ?`;
+        const [insertResult] = await this.#sqlOperation.query(sql, [objectValue[i]]);
+        result.push(insertResult);
+      }
       return result;
+     }
+    const sql = `INSERT INTO ${tableName} SET ?`;
+    const [insertResult] = await this.#sqlOperation.query(sql, [objectValue]);
+    return insertResult;
     } catch (error) {
       console.log(error);
     }
   }
 
   async update(yourIdName, tableName, objectValue, idValue) {
-    const sql = `UPDATE ${tableName} SET ? WHERE ${
-      yourIdName || "Id"
-    } = ${idValue}`;
+   
     try {
-      const [result] = await this.#sqlOperation.query(sql, [objectValue]);
-      return result;
+      if(Array.isArray(objectValue) && Array.isArray(idValue)){
+        let result = [];
+        for(let i in objectValue){
+          const sql = `UPDATE ${tableName} SET ? WHERE ${yourIdName} = ${idValue[i]}`;
+          const [updateResult] = await this.#sqlOperation.query(sql, [objectValue[i]]);
+          result.push(updateResult);
+        }
+        return result;
+      }
+      const sql = `UPDATE ${tableName} SET ? WHERE ${yourIdName} = ${idValue}`;
+      const [updateResult] = await this.#sqlOperation.query(sql, [objectValue]);
+      return updateResult;
     } catch (error) {
       console.log(error);
     }
@@ -55,13 +97,11 @@ class AGS {
   async delete(tableName, yourIdName, idValue) {
     try {
       if(Array.isArray(idValue)){
-        let result = {
-          affectedRows: 0
-        }
+        let result = [];
         for(let i in idValue){
           const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue[i]}`;
-          await this.#sqlOperation.query(sql);
-          result.affectedRows += 1;
+          const [deleteResult] = await this.#sqlOperation.query(sql);
+          result.push(deleteResult);
         }
         return result;
       }
@@ -74,21 +114,32 @@ class AGS {
   }
 
   async selectLeftAndRightJoin(tbl_a, tbl_b, columnName, onCondition, yourIdName, joinType, idValue) {
-    const sql = `SELECT ${
-      columnName || "*"
-    } FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ?`;
     try {
-      const [result] = await this.#sqlOperation.query(sql,[idValue]);
-      return result[0];
+      if(Array.isArray(idValue)){
+        let result = [];
+        for(let i in idValue){
+          const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ${idValue[i]}`;
+          const [selectResult] = await this.#sqlOperation.query(sql);
+          result.push(selectResult[0]);
+        }
+        return result;
+      }
+      const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ${idValue}`;
+      const [selectResult] = await this.#sqlOperation.query(sql);
+      return selectResult;
     } catch (error) {
       console.log(error);
     }
   }
 
   async selectInnerJoin(tbl_a, tbl_b, columnName, onCondition){
+   try {
     const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} INNER JOIN ${tbl_b} ON ${onCondition}`;
     const [result] = await this.#sqlOperation.query(sql);
     return result;
+   } catch (error) {
+    console.log(error);
+   }
   }
 }
 
