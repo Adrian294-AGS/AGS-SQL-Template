@@ -1,5 +1,5 @@
 {
-  "name": "ags-sql-gen",
+  "name": "@adrian294-ags/ags-sql-gen",
   "version": "1.0.0",
   "description": "preset query",
   "main": "index.js",
