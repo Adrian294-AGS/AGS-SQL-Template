@@ -20,7 +20,7 @@ It also includes a fun bonus function: `getDadJokes()` — because debugging is 
 ## 📦 Installation
 
 ```bash
-npm install ags-sql-lib
+npm install ags-sql-lib mysql2
 
 ## Importing
 import AGS from "ags-sql-lib";
