@@ -23,13 +23,15 @@ npm install mysql2
 ```
 ## Usage Sample
 
-## Importing
+### Importing
 ```js
 import AGS from "ags-sql-lib";
 
 const sql = new AGS("root", "password", "localhost", "my_database");
-
+```
+### select
 Select all columns
+```js
 const result = await sql.select("*", "tblusers");
 
 Select from multiple tables
