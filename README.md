@@ -22,6 +22,10 @@ It also includes a fun bonus function: `getDadJokes()` — because debugging is 
 ```bash
 npm install ags-sql-lib mysql2
 
+---
+
+## Usage Sample
+
 ## Importing
 import AGS from "ags-sql-lib";
 
@@ -90,3 +94,5 @@ import { getDadJokes } from "ags-sql-lib";
 
 const joke = await getDadJokes();
 console.log(joke);
+
+---

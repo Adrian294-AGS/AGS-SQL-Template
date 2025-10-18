@@ -1,7 +1,7 @@
 {
   "name": "ags-sql-gen",
   "version": "1.0.2",
-  "description": "preset query",
+  "description": "lightweight Node.js MySQL helper library",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
