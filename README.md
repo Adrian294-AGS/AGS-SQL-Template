@@ -20,54 +20,53 @@ It also includes a fun bonus function: `getDadJokes()` — because debugging is 
 ```bash
 npm install ags-sql-lib 
 npm install mysql2
-
 ```
 ## Usage Sample
-
+```js
 ## Importing
 import AGS from "ags-sql-lib";
 
 const sql = new AGS("root", "password", "localhost", "my_database");
 
-// Select all columns
+Select all columns
 const result = await sql.select("*", "tblusers");
 
-// Select from multiple tables
+Select from multiple tables
 const result = await sql.select("*", ["tblusers", "products"]);
 
-// Single
+Single
 const user = await sql.selectWithId("id", "*", "tblusers", 1);
 
-// Multiple
+Multiple
 const users = await sql.selectWithId("id", "*", "tblusers", [1, 2, 3]);
 
 ## InsertInto
-// Single insert
+Single insert
 await sql.insertInto("tblusers", { name: "John", age: 25 });
 
-// Multiple inserts
+Multiple inserts
 await sql.insertInto("tblusers", [
   { name: "Alice", age: 22 },
   { name: "Bob", age: 30 }
 ]);
 
-// Single update
+Single update
 await sql.update("id", "tblusers", { age: 26 }, 1);
 
-// Multiple updates
+Multiple updates
 await sql.update("id", "tblusers", [{ age: 22 }, { age: 28 }], [1, 2]);
 
 ## DELETE
 
-// Single delete
+Single delete
 await sql.delete("tblusers", "id", 1);
 
-// Multiple delete
+Multiple delete
 await sql.delete("tblusers", "id", [2, 3]);
 
 ## Joining Table
 
-// LEFT JOIN example
+LEFT JOIN example
 const result = await sql.selectLeftAndRightJoin(
   "tblusers",
   "tblorders",
@@ -78,7 +77,7 @@ const result = await sql.selectLeftAndRightJoin(
   1
 );
 
-// INNER JOIN
+INNER JOIN
 const result = await sql.selectInnerJoin(
   "tblusers",
   "tblorders",
