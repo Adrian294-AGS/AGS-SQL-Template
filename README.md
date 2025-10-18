@@ -45,17 +45,21 @@ const users = await sql.selectWithId("id", "*", "tblusers", [1, 2, 3]);
 Single insert
 ```js
 await sql.insertInto("tblusers", { name: "John", age: 25 });
-
+```
 Multiple inserts
+```js
 await sql.insertInto("tblusers", [
   { name: "Alice", age: 22 },
   { name: "Bob", age: 30 }
 ]);
-
+```
+### Update
 Single update
+```js
 await sql.update("id", "tblusers", { age: 26 }, 1);
-
+```
 Multiple updates
+```js
 await sql.update("id", "tblusers", [{ age: 22 }, { age: 28 }], [1, 2]);
 ```
 ### DELETE
@@ -79,8 +83,9 @@ const result = await sql.selectLeftAndRightJoin(
   "LEFT JOIN",
   1
 );
-
+```
 INNER JOIN
+```js
 const result = await sql.selectInnerJoin(
   "tblusers",
   "tblorders",
