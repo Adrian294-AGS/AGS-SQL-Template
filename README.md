@@ -22,8 +22,9 @@ npm install ags-sql-lib
 npm install mysql2
 ```
 ## Usage Sample
-```js
+
 ## Importing
+```js
 import AGS from "ags-sql-lib";
 
 const sql = new AGS("root", "password", "localhost", "my_database");
@@ -39,9 +40,10 @@ const user = await sql.selectWithId("id", "*", "tblusers", 1);
 
 Multiple
 const users = await sql.selectWithId("id", "*", "tblusers", [1, 2, 3]);
-
-## InsertInto
+```
+### InsertInto
 Single insert
+```js
 await sql.insertInto("tblusers", { name: "John", age: 25 });
 
 Multiple inserts
@@ -55,18 +57,19 @@ await sql.update("id", "tblusers", { age: 26 }, 1);
 
 Multiple updates
 await sql.update("id", "tblusers", [{ age: 22 }, { age: 28 }], [1, 2]);
-
-## DELETE
-
+```
+### DELETE
 Single delete
+```js
 await sql.delete("tblusers", "id", 1);
 
 Multiple delete
 await sql.delete("tblusers", "id", [2, 3]);
-
-## Joining Table
+```
+### Joining Table
 
 LEFT JOIN example
+```js
 const result = await sql.selectLeftAndRightJoin(
   "tblusers",
   "tblorders",
@@ -84,14 +87,14 @@ const result = await sql.selectInnerJoin(
   "tblusers.name, tblorders.total",
   "tblusers.id = tblorders.user_id"
 );
-
-## BONUS
-
+```
+### BONUS
+```js
 import { getDadJokes } from "ags-sql-lib";
 
 const joke = await getDadJokes();
 console.log(joke);
-
+```
 ## REMINDER!!!
 
 your project must be in "type":"module",
