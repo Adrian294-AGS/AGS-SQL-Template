@@ -101,8 +101,4 @@ import { getDadJokes } from "ags-sql-lib";
 
 const joke = await getDadJokes();
 console.log(joke);
-```
-## REMINDER!!!
-
-your project must be in "type":"module",
 

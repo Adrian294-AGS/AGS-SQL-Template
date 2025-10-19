@@ -1,6 +1,6 @@
-import mysql from "mysql2";
+const mysql = require("mysql2");
 
-export const db = (user, password, host, database) => {
+module.exports = (user, password, host, database) => {
   const dbConnection = mysql
     .createPool({
       user: user,
@@ -11,4 +11,4 @@ export const db = (user, password, host, database) => {
     .promise();
 
   return dbConnection;
-};
+}

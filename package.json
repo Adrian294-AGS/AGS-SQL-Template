@@ -3,10 +3,10 @@
   "version": "1.0.2",
   "description": "lightweight Node.js MySQL helper library",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Adrian294-AGS/AGS-SQL-Template.git"
