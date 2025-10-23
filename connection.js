@@ -137,13 +137,7 @@ export default class {
    } catch (error) {
     console.log(error);
    }
-<<<<<<< HEAD
-  } 
-
-  
-=======
   }
-
   async sum(columnName, tableName){
     try {
       if(Array.isArray(tableName)){
@@ -155,7 +149,6 @@ export default class {
         }
         return result;
       }
-
       const sql = `SELECT SUM(${columnName || "*"}) FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
@@ -163,5 +156,4 @@ export default class {
       console.log(error);
     }
   }
->>>>>>> 0db99738c2134405223712353001dff89c408a87
 };
