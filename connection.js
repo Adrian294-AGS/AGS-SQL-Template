@@ -195,4 +195,23 @@ export default class {
       console.log(error);
     }
   }
+
+  async avg(columnName, tableName){
+    try {
+      if(Array.isArray(tableName)){
+        let result = [];
+        for(let i in tableName){
+          const sql = `SELECT AVG(${columnName || "*"}) FROM ${tableName[i]}`;
+          const [selectResult] = await this.#sqlOperation.query(sql);
+          result.push(selectResult);
+        }
+        return result;
+      }
+      const sql = `SELECT AVG(${columnName || "*"}) FROM ${tableName}`;
+      const [result] = await this.#sqlOperation.query(sql);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
