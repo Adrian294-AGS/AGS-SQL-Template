@@ -1,6 +1,6 @@
-const connection = require("./database/dbConnection");
+import connection from "./database/dbConnection.js";
 
-module.exports = class {
+export default class {
     #sqlOperation;
 
     constructor(user, password, host, database) {
@@ -18,7 +18,6 @@ module.exports = class {
         }
         return result;
       }
-
       const sql = `SELECT ${columnName || "*"} FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
@@ -138,5 +137,7 @@ module.exports = class {
    } catch (error) {
     console.log(error);
    }
-  }
+  } 
+
+  
 };

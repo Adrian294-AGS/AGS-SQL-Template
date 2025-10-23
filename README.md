@@ -27,7 +27,7 @@ npm install mysql2
 ```js
 import AGS from "ags-sql-lib";
 
-const sql = new AGS("root", "password", "localhost", "my_database");
+const sql = new AGS.connect("root", "password", "localhost", "my_database");
 ```
 ### select
 Select all columns

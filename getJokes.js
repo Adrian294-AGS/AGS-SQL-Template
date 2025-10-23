@@ -1,6 +1,6 @@
-const { exec } = require("child_process");
+import { exec } from "child_process";
 
-module.exports = async () => {
+export default async () => {
   return new Promise((resolve, reject) => {
     try {
       exec("curl https://icanhazdadjoke.com", (error, stdout, stderr) => {

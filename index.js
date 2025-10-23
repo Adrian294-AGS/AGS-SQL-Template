@@ -1,4 +1,7 @@
-module.exports = {
-  connect: require("./connection"),
-  getJokes: require("./getJokes")
+import connect from "./connection.js";
+import getJokes from "./getJokes.js";
+
+export default {
+  connect,
+  getJokes
 };

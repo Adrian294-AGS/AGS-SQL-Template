@@ -1,6 +1,6 @@
-const mysql = require("mysql2");
+import mysql from "mysql2";
 
-module.exports = (user, password, host, database) => {
+export default (user, password, host, database) => {
   const dbConnection = mysql
     .createPool({
       user: user,
