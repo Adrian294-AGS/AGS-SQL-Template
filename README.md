@@ -3,6 +3,8 @@
 
 AGS is a lightweight Node.js MySQL helper library that simplifies database operations such as **SELECT**, **INSERT**, **UPDATE**, **DELETE**, and **JOIN** queries.  
 It also includes a fun bonus function: `getDadJokes()` — because debugging is better with a laugh. 😄
+`AGS-SQL-Template` is a ready-to-use SQL helper class designed for developers who frequently interact with MySQL databases in Node.js.  
+It provides easy methods for `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `JOIN`, and aggregation queries (`SUM`, `MIN`, `MAX`, `AVG`) without needing to manually write long SQL statements every time.
 
 
 ## 🚀 Features
@@ -94,6 +96,27 @@ const result = await sql.selectInnerJoin(
   "tblusers.name, tblorders.total",
   "tblusers.id = tblorders.user_id"
 );
+```
+### Aggregation queries
+
+```js
+Calculate the total of all 'grade' values in one table
+const totalGrades = await sql.sum("grade", "tbl_grades");
+
+Get the lowest grade
+const lowestGrade = await sql.min("grade", "tbl_grades");
+
+Get the highest grade
+const highestGrade = await sql.max("grade", "tbl_grades");
+
+Get the average grade
+const averageGrade = await sql.avg("grade", "tbl_grades");
+
+multiple tables
+const totalResults = await db.sum("amount", ["tbl_sales", "tbl_purchases"]);
+const minResults = await db.min("score", ["tbl_quiz1", "tbl_quiz2"]);
+const maxResults = await db.max("salary", ["tbl_teachers", "tbl_admin"]);
+const avgResults = await db.avg("grade", ["tbl_midterm", "tbl_final"]);
 ```
 ### BONUS
 ```js

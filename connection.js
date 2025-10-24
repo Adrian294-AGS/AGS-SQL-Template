@@ -144,13 +144,13 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT SUM(${columnName || "*"}) FROM ${tableName[i]}`;
+          const sql = `SELECT SUM(${columnName}) FROM ${tableName[i]}`;
           const [selectResult] = await this.#sqlOperation.query(sql);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT SUM(${columnName || "*"}) FROM ${tableName}`;
+      const sql = `SELECT SUM(${columnName}) FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
@@ -163,13 +163,13 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT MAX(${columnName || "*"}) FROM ${tableName[i]}`;
+          const sql = `SELECT MAX(${columnName}) FROM ${tableName[i]}`;
           const [selectResult] = await this.#sqlOperation.query(sql);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT MAX(${columnName || "*"}) FROM ${tableName}`;
+      const sql = `SELECT MAX(${columnName}) FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
@@ -182,13 +182,13 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT MIN(${columnName || "*"}) FROM ${tableName[i]}`;
+          const sql = `SELECT MIN(${columnName}) FROM ${tableName[i]}`;
           const [selectResult] = await this.#sqlOperation.query(sql);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT MIN(${columnName || "*"}) FROM ${tableName}`;
+      const sql = `SELECT MIN(${columnName}) FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
@@ -201,13 +201,13 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT AVG(${columnName || "*"}) FROM ${tableName[i]}`;
+          const sql = `SELECT AVG(${columnName}) FROM ${tableName[i]}`;
           const [selectResult] = await this.#sqlOperation.query(sql);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT AVG(${columnName || "*"}) FROM ${tableName}`;
+      const sql = `SELECT AVG(${columnName}) FROM ${tableName}`;
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
