@@ -22,7 +22,7 @@ export default class {
       const [result] = await this.#sqlOperation.query(sql);
       return result;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -32,23 +32,19 @@ export default class {
       if(Array.isArray(idValue)){
         let result = [];
         for(let i in idValue){
-          const sql = `SELECT ${columnName || "*"} FROM ${tableName} WHERE ${
-      yourIdName || "Id"
-    } = ${idValue[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql)
+          const sql = `SELECT ${columnName || "*"} FROM ?? WHERE ?? = ?`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tableName, yourIdName, idValue[i]]);
           result.push(selectResult[0]);
         }
         return result;
       }
 
-      const sql = `SELECT ${columnName || "*"} FROM ${tableName} WHERE ${
-      yourIdName || "Id"
-    } = ${idValue}`;
-      const [selectResult] = await this.#sqlOperation.query(sql)
+      const sql = `SELECT ${columnName || "*"} FROM ?? WHERE ?? = ?`;
+      const [selectResult] = await this.#sqlOperation.query(sql, [tableName, yourIdName, idValue]);
       return selectResult[0];
 
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -67,7 +63,7 @@ export default class {
     const [insertResult] = await this.#sqlOperation.query(sql, [objectValue]);
     return insertResult;
     } catch (error) {
-      console.log(error);
+     throw new Error(error.message);
     }
   }
 
@@ -77,17 +73,17 @@ export default class {
       if(Array.isArray(objectValue) && Array.isArray(idValue)){
         let result = [];
         for(let i in objectValue){
-          const sql = `UPDATE ${tableName} SET ? WHERE ${yourIdName} = ${idValue[i]}`;
-          const [updateResult] = await this.#sqlOperation.query(sql, [objectValue[i]]);
+          const sql = `UPDATE ?? SET ? WHERE ?? = ?`;
+          const [updateResult] = await this.#sqlOperation.query(sql, [tableName, objectValue[i], yourIdName, idValue[i]]);
           result.push(updateResult);
         }
         return result;
       }
-      const sql = `UPDATE ${tableName} SET ? WHERE ${yourIdName} = ${idValue}`;
-      const [updateResult] = await this.#sqlOperation.query(sql, [objectValue]);
+      const sql = `UPDATE ?? SET ? WHERE ?? = ?`;
+      const [updateResult] = await this.#sqlOperation.query(sql, [tableName, objectValue, yourIdName, idValue]);
       return updateResult;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -96,17 +92,17 @@ export default class {
       if(Array.isArray(idValue)){
         let result = [];
         for(let i in idValue){
-          const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue[i]}`;
-          const [deleteResult] = await this.#sqlOperation.query(sql);
+          const sql = `DELETE FROM ?? WHERE ?? = ?`;
+          const [deleteResult] = await this.#sqlOperation.query(sql, [tableName, yourIdName, idValue[i]]);
           result.push(deleteResult);
         }
         return result;
       }
-      const sql = `DELETE FROM ${tableName} WHERE ${yourIdName || "Id"} = ${idValue}`;
-      const [deleteResult] = await this.#sqlOperation.query(sql);
+      const sql = `DELETE FROM ?? WHERE ?? = ?`;
+      const [deleteResult] = await this.#sqlOperation.query(sql, [tableName, yourIdName, idValue]);
       return deleteResult;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -115,27 +111,27 @@ export default class {
       if(Array.isArray(idValue)){
         let result = [];
         for(let i in idValue){
-          const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ${idValue[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql);
+          const sql = `SELECT ${columnName || "*"} FROM ?? ${joinType} ?? ON ${onCondition} WHERE ?? = ?`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tbl_a, tbl_b, yourIdName, idValue[i]]);
           result.push(selectResult[0]);
         }
         return result;
       }
-      const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} ${joinType} ${tbl_b} ON ${onCondition} WHERE ${yourIdName} = ${idValue}`;
-      const [selectResult] = await this.#sqlOperation.query(sql);
+      const sql = `SELECT ${columnName || "*"} FROM ?? ${joinType} ?? ON ${onCondition} WHERE ?? = ?`;
+      const [selectResult] = await this.#sqlOperation.query(sql, [tbl_a, tbl_b, yourIdName, idValue]);
       return selectResult;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
   async selectInnerJoin(tbl_a, tbl_b, columnName, onCondition){
    try {
-    const sql = `SELECT ${columnName || "*"} FROM ${tbl_a} INNER JOIN ${tbl_b} ON ${onCondition}`;
-    const [result] = await this.#sqlOperation.query(sql);
+    const sql = `SELECT ${columnName || "*"} FROM ?? INNER JOIN ?? ON ${onCondition}`;
+    const [result] = await this.#sqlOperation.query(sql, [tbl_a, tbl_b]);
     return result;
    } catch (error) {
-    console.log(error);
+    throw new Error(error.message);
    }
   }
 
@@ -144,17 +140,17 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT SUM(${columnName}) FROM ${tableName[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql);
+          const sql = `SELECT SUM(${columnName}) FROM ??`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tableName[i]]);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT SUM(${columnName}) FROM ${tableName}`;
-      const [result] = await this.#sqlOperation.query(sql);
+      const sql = `SELECT SUM(${columnName}) FROM ??`;
+      const [result] = await this.#sqlOperation.query(sql, [tableName]);
       return result;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -163,17 +159,17 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT MAX(${columnName}) FROM ${tableName[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql);
+          const sql = `SELECT MAX(${columnName}) FROM ??`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tableName[i]]);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT MAX(${columnName}) FROM ${tableName}`;
-      const [result] = await this.#sqlOperation.query(sql);
+      const sql = `SELECT MAX(${columnName}) FROM ??`;
+      const [result] = await this.#sqlOperation.query(sql, [tableName]);
       return result;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
@@ -182,17 +178,17 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT MIN(${columnName}) FROM ${tableName[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql);
+          const sql = `SELECT MIN(${columnName}) FROM ??`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tableName[i]]);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT MIN(${columnName}) FROM ${tableName}`;
-      const [result] = await this.#sqlOperation.query(sql);
+      const sql = `SELECT MIN(${columnName}) FROM ??`;
+      const [result] = await this.#sqlOperation.query(sql, [tableName]);
       return result;
     } catch (error) {
-      console.log(error);
+     throw new Error(error.message);
     }
   }
 
@@ -201,17 +197,17 @@ export default class {
       if(Array.isArray(tableName)){
         let result = [];
         for(let i in tableName){
-          const sql = `SELECT AVG(${columnName}) FROM ${tableName[i]}`;
-          const [selectResult] = await this.#sqlOperation.query(sql);
+          const sql = `SELECT AVG(${columnName}) FROM ??`;
+          const [selectResult] = await this.#sqlOperation.query(sql, [tableName[i]]);
           result.push(selectResult);
         }
         return result;
       }
-      const sql = `SELECT AVG(${columnName}) FROM ${tableName}`;
-      const [result] = await this.#sqlOperation.query(sql);
+      const sql = `SELECT AVG(${columnName}) FROM ??`;
+      const [result] = await this.#sqlOperation.query(sql, [tableName]);
       return result;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 };
